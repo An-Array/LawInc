@@ -41,6 +41,14 @@ export default async function HomePage() {
         </Link>
       </div>
 
+            <div className="mt-10">
+        <Link
+        className="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+          href="/search">
+        Ask LawInc
+        </Link>
+      </div>
+
       <div className="mt-10">
         <Link
           className="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
