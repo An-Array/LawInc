@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
-import { FormEvent, useState } from "react"
+import Link from "next/link";
 
-import { searchLegal,type SearchResponse } from "@/lib/api/search"
+import { FormEvent, useState } from "react";
+
+import { searchLegal, type SearchResponse } from "@/lib/api/search";
 
 export default function SearchForm() {
   const [query, setQuery] = useState("");
@@ -15,7 +17,7 @@ export default function SearchForm() {
 
     const trimmedQuery = query.trim();
 
-    if(!trimmedQuery) {
+    if (!trimmedQuery) {
       return;
     }
 
@@ -37,22 +39,22 @@ export default function SearchForm() {
     }
   }
 
-
   return (
     <section>
       <form onSubmit={handleSubmit} className="flex gap-3">
         <input
-        type="search"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-        placeholder="Search legal provisions...."
-        className="flex-1 rounded-md border border-slate-700 bg-slate-900 px-4 py-3 text-white placeholder:text-slate-400"
-        aria-label="Search legal provisions"
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search legal provisions...."
+          className="flex-1 rounded-md border border-slate-700 bg-slate-900 px-4 py-3 text-white placeholder:text-slate-400"
+          aria-label="Search legal provisions"
         />
         <button
-        type="submit"
-        disabled={loading || !query.trim()}
-        className="rounded-md bg-slate-400 px-5 py-3 font-semibold text-slate-950 disabled:cursor-not-allowed disabled:opacity-50">
+          type="submit"
+          disabled={loading || !query.trim()}
+          className="rounded-md bg-slate-400 px-5 py-3 font-semibold text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
+        >
           {loading ? "Searching..." : "Search"}
         </button>
       </form>
@@ -64,9 +66,7 @@ export default function SearchForm() {
         )}
 
         {!loading && !error && results && results.results.length === 0 && (
-          <p className="text-sm text-slate-400">
-            No results found.
-          </p>
+          <p className="text-sm text-slate-400">No results found.</p>
         )}
 
         {!loading && !error && results && results.results.length > 0 && (
@@ -80,15 +80,20 @@ export default function SearchForm() {
                   {result.title}
                 </h2>
 
-                <p className="mt-2 text-sm text-slate-300">
-                  {result.snippet}
-                </p>
+                <p className="mt-2 text-sm text-slate-300">{result.snippet}</p>
 
                 {result.score !== null && (
                   <p className="mt-3 text-xs text-slate-500">
                     Relevance: {result.score}
                   </p>
                 )}
+
+                <Link
+                  href={`/documents/${encodeURIComponent(result.id)}`}
+                  className="mt-4 inline-block text-sm font-semibold text-white underline"
+                >
+                  Open document
+                </Link>
               </article>
             ))}
           </div>
