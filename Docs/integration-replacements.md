@@ -48,3 +48,40 @@ _No temporary implementation currently registered._
 ## Citation & Validation (E)
 
 _No temporary implementation currently registered._
+
+## Public research
+
+### Search
+
+- file: `frontend/src/lib/api/search.ts`
+- function: `searchLegal`
+- currently: frontend API boundary
+- replace/integrate with: Search & Retrieval (C)
+
+### Question answering
+
+- file: `frontend/src/lib/api/questions.ts`
+- function: `askQuestion`
+- currently: frontend API boundary
+- replace/integrate with: AI / LLM (D) + Citation & Validation (E)
+
+### Document retrieval
+
+- file: `frontend/src/lib/api/documents.ts`
+- function: `getDocument`
+- currently: frontend API boundary
+- replace/integrate with: Legal Source & Ingestion (A) + Legal Knowledge Model (B)
+
+### Search results
+
+- file: `frontend/src/components/search/search-form.tsx`
+- function: result rendering
+- currently: renders `SearchResponse`
+- replace/integrate with: Search & Retrieval (C)
+
+### Citations
+
+- file: `frontend/src/components/citations/citation-list.tsx`
+- function: `CitationList`
+- currently: renders citation strings
+- replace/integrate with: Citation & Validation (E)

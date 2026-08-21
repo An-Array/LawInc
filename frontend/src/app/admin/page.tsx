@@ -1,8 +1,6 @@
-import Link from "next/link";
-
 export default function AdminPage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-16">
+    <main className="mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-6 ">
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">
         LawInc administration
       </p>
@@ -13,11 +11,6 @@ export default function AdminPage() {
         Administrative workflows will live here, inside the same Next.js
         application. Authentication and operational features come later.
       </p>
-      <div className="mt-10">
-        <Link className="text-sm font-semibold text-slate-950 underline" href="/">
-          Return to LawInc
-        </Link>
-      </div>
     </main>
   );
 }

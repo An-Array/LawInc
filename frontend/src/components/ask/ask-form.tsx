@@ -1,8 +1,10 @@
 "use client"
 
-import { FormEvent, useState } from "react"
+import { FormEvent, useState, type KeyboardEvent } from "react"
 
 import { askQuestion, type QuestionResponse } from "@/lib/api/questions"
+
+import CitationList from "../citations/citation-list";
 
 export default function AskForm() {
   const [question, setQuestion] = useState("");
@@ -38,12 +40,23 @@ export default function AskForm() {
     }
   }
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+
+      if (question.trim() && !loading) {
+        event.currentTarget.form?.requestSubmit();
+      }
+    }
+  };
+
   return (
     <section>
       <form onSubmit={handleSubmit}>
         <textarea
         value={question}
         onChange={(event) => setQuestion(event.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Ask a legal question..."
         aria-label="Legal Question"
         rows={5}
@@ -80,16 +93,7 @@ export default function AskForm() {
                   Sources
                 </h3>
 
-                <ul className="mt-3 space-y-2">
-                  {response.citations.map((citation) => (
-                    <li
-                      key={citation}
-                      className="text-sm text-slate-300"
-                    >
-                      {citation}
-                    </li>
-                  ))}
-                </ul>
+                <CitationList citations={response.citations}/>
               </div>
             )}
           </article>
