@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic"
 import Link from "next/link";
 
-import { getApiHealth } from "@/lib/lawinc-api";
+import { getApiHealth } from "@/lib/api/health";
 
 export default async function HomePage() {
   const health = await getApiHealth();
@@ -33,6 +33,13 @@ export default async function HomePage() {
           </p>
         )}
       </section>
+      <div className="mt-10">
+        <Link
+        className="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+          href="/search">
+        Search LawInc
+        </Link>
+      </div>
 
       <div className="mt-10">
         <Link
