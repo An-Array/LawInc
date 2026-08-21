@@ -1,13 +1,12 @@
 export const dynamic = "force-dynamic"
-import Link from "next/link";
 
-import { getApiHealth } from "@/lib/lawinc-api";
+import { getApiHealth } from "@/lib/api/health";
 
 export default async function HomePage() {
   const health = await getApiHealth();
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-16">
+    <main className="mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-16">
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-600">
         LawInc
       </p>
@@ -34,14 +33,7 @@ export default async function HomePage() {
         )}
       </section>
 
-      <div className="mt-10">
-        <Link
-          className="rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
-          href="/admin"
-        >
-          Open admin foundation
-        </Link>
-      </div>
+
     </main>
   );
 }
