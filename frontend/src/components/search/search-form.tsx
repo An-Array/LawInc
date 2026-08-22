@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
-import { FormEvent, useState } from "react";
+import { useState, type FormEvent } from "react";
 
 import { searchLegal, type SearchResponse } from "@/lib/api/search";
 
@@ -17,7 +16,7 @@ export default function SearchForm() {
 
     const trimmedQuery = query.trim();
 
-    if (!trimmedQuery) {
+    if (!trimmedQuery || loading) {
       return;
     }
 
@@ -41,64 +40,123 @@ export default function SearchForm() {
 
   return (
     <section>
-      <form onSubmit={handleSubmit} className="flex gap-3">
-        <input
-          type="search"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search legal provisions...."
-          className="flex-1 rounded-md border border-slate-700 bg-slate-900 px-4 py-3 text-white placeholder:text-slate-400"
-          aria-label="Search legal provisions"
-        />
-        <button
-          type="submit"
-          disabled={loading || !query.trim()}
-          className="rounded-md bg-slate-400 px-5 py-3 font-semibold text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {loading ? "Searching..." : "Search"}
-        </button>
+      <form onSubmit={handleSubmit}>
+        <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
+          <div className="border-b border-border px-5 py-4">
+            <label
+              htmlFor="legal-search"
+              className="text-sm font-semibold text-foreground"
+            >
+              Search the law
+            </label>
+          </div>
+
+          <div className="flex flex-col gap-3 p-5 sm:flex-row">
+            <input
+              id="legal-search"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search a provision, case, principle, or topic..."
+              aria-label="Search legal provisions"
+              disabled={loading}
+              className="min-w-0 flex-1 rounded-md border border-border bg-background px-4 py-3 text-base text-foreground outline-none placeholder:text-muted transition-colors focus:border-focus focus:ring-2 focus:ring-focus/20 disabled:cursor-not-allowed disabled:opacity-60"
+            />
+
+            <button
+              type="submit"
+              disabled={loading || !query.trim()}
+              className="shrink-0 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {loading ? "Searching..." : "Search"}
+            </button>
+          </div>
+        </div>
       </form>
-      <div className="mt-8">
-        {error && (
-          <p className="text-sm text-red-400">
-            Unable to connect to the search service.
+
+      {error && (
+        <div
+          role="alert"
+          className="mt-8 rounded-lg border border-danger/30 bg-danger/5 px-5 py-4"
+        >
+          <p className="text-sm font-semibold text-danger">
+            Unable to search legal sources.
           </p>
-        )}
 
-        {!loading && !error && results && results.results.length === 0 && (
-          <p className="text-sm text-slate-400">No results found.</p>
-        )}
+          <p className="mt-1 text-sm text-muted">
+            The research service could not process this search. Please try
+            again.
+          </p>
+        </div>
+      )}
 
-        {!loading && !error && results && results.results.length > 0 && (
-          <div className="space-y-4">
-            {results.results.map((result) => (
-              <article
-                key={result.id}
-                className="rounded-lg border border-slate-700 bg-slate-900 p-5"
-              >
-                <h2 className="text-lg font-semibold text-white">
-                  {result.title}
-                </h2>
+      {!loading && !error && results && results.results.length === 0 && (
+        <div className="mt-12 border-t border-border pt-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            Search result
+          </p>
 
-                <p className="mt-2 text-sm text-slate-300">{result.snippet}</p>
+          <h2 className="mt-3 font-lawinc-serif text-2xl tracking-tight text-foreground">
+            No results found.
+          </h2>
 
-                {result.score !== null && (
-                  <p className="mt-3 text-xs text-slate-500">
-                    Relevance: {result.score}
-                  </p>
-                )}
+          <p className="mt-2 text-sm leading-6 text-muted">
+            Try a different legal provision, case, principle, or topic.
+          </p>
+        </div>
+      )}
 
-                <Link
-                  href={`/documents/${encodeURIComponent(result.id)}`}
-                  className="mt-4 inline-block text-sm font-semibold text-white underline"
-                >
-                  Open document
-                </Link>
+      {!loading && !error && results && results.results.length > 0 && (
+        <section className="mt-14">
+          <div className="border-b border-border pb-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              Search results
+            </p>
+
+            <h2 className="mt-3 font-lawinc-serif text-3xl tracking-tight text-foreground">
+              Evidence for {results.query}.
+            </h2>
+          </div>
+
+          <div className="mt-8 divide-y divide-border border-y border-border">
+            {results.results.map((result, index) => (
+              <article key={result.id} className="py-7">
+                <div className="flex gap-5">
+                  <span className="shrink-0 pt-1 text-xs font-semibold text-accent">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-lawinc-serif text-xl tracking-tight text-foreground">
+                      {result.title}
+                    </h3>
+
+                    <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">
+                      {result.snippet}
+                    </p>
+
+                    <div className="mt-5 flex flex-wrap items-center gap-4">
+                      <Link
+                        href={`/documents/${encodeURIComponent(result.id)}`}
+                        className="text-sm font-semibold text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:text-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                      >
+                        Open document
+                      </Link>
+
+                      {result.score !== null &&
+                        result.score !== undefined && (
+                          <span className="text-xs text-muted">
+                            Relevance: {result.score}
+                          </span>
+                        )}
+                    </div>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
-        )}
-      </div>
+        </section>
+      )}
     </section>
   );
 }

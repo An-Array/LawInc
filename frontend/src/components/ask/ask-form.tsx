@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { FormEvent, useState, type KeyboardEvent } from "react"
+import { useState, type FormEvent, type KeyboardEvent } from "react";
 
-import { askQuestion, type QuestionResponse } from "@/lib/api/questions"
+import { askQuestion, type QuestionResponse } from "@/lib/api/questions";
 
 import CitationList from "../citations/citation-list";
 
@@ -17,7 +17,7 @@ export default function AskForm() {
 
     const trimmedQuestion = question.trim();
 
-    if (!trimmedQuestion) {
+    if (!trimmedQuestion || loading) {
       return;
     }
 
@@ -34,13 +34,14 @@ export default function AskForm() {
         setError(true);
         return;
       }
+
       setResponse(result);
     } finally {
       setLoading(false);
     }
   }
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
 
@@ -48,57 +49,88 @@ export default function AskForm() {
         event.currentTarget.form?.requestSubmit();
       }
     }
-  };
+  }
 
   return (
-    <section>
+    <div>
       <form onSubmit={handleSubmit}>
-        <textarea
-        value={question}
-        onChange={(event) => setQuestion(event.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Ask a legal question..."
-        aria-label="Legal Question"
-        rows={5}
-        className="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-3 text-white placeholder:text-slate-400"
-        />
-        <button
-        type="submit"
-        disabled={loading || !question.trim()}
-        className="mt-4 rounded-md bg-slate-400 px-5 py-3 font-semibold text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {loading ? "Thinking..." : "Ask LawInc"}
-        </button>
-      </form>
-          <div className="mt-10">
-        {error && (
-          <p className="text-sm text-red-400">
-            Unable to get an answer from LawInc.
-          </p>
-        )}
+        <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
+          <div className="border-b border-border px-5 py-4">
+            <label
+              htmlFor="legal-question"
+              className="text-sm font-semibold text-foreground"
+            >
+              Your question
+            </label>
+          </div>
 
-        {!loading && !error && response && (
-          <article className="rounded-lg border border-slate-700 bg-slate-900 p-6">
-            <h2 className="text-xl font-semibold text-white">
-              Answer
-            </h2>
+          <textarea
+            id="legal-question"
+            value={question}
+            onChange={(event) => setQuestion(event.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask about a provision, legal principle, case, or jurisdiction..."
+            aria-label="Legal question"
+            rows={7}
+            disabled={loading}
+            className="block w-full resize-y border-0 bg-surface px-5 py-5 text-base leading-7 text-foreground outline-none placeholder:text-muted disabled:cursor-not-allowed disabled:opacity-60"
+          />
 
-            <p className="mt-4 whitespace-pre-wrap text-slate-300">
-              {response.answer}
+          <div className="flex items-center justify-between gap-4 border-t border-border bg-surface-muted px-5 py-4">
+            <p className="text-xs text-muted">
+              Press Enter to ask. Use Shift + Enter for a new line.
             </p>
 
-            {response.citations.length > 0 && (
-              <div className="mt-8">
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
-                  Sources
-                </h3>
+            <button
+              type="submit"
+              disabled={loading || !question.trim()}
+              className="shrink-0 rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {loading ? "Researching..." : "Ask LawInc"}
+            </button>
+          </div>
+        </div>
+      </form>
 
-                <CitationList citations={response.citations}/>
-              </div>
-            )}
+      {error && (
+        <div
+          role="alert"
+          className="mt-8 rounded-lg border border-danger/30 bg-danger/5 px-5 py-4"
+        >
+          <p className="text-sm font-semibold text-danger">
+            Unable to retrieve an answer.
+          </p>
+
+          <p className="mt-1 text-sm text-muted">
+            The research service could not process this question. Please try
+            again.
+          </p>
+        </div>
+      )}
+
+      {response && !loading && !error && (
+        <section className="mt-14">
+          <div className="border-b border-border pb-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              Research result
+            </p>
+
+            <h2 className="mt-3 font-lawinc-serif text-3xl tracking-tight text-foreground">
+              Answer
+            </h2>
+          </div>
+
+          <article className="mt-8">
+            <p className="whitespace-pre-wrap text-base leading-8 text-foreground">
+              {response.answer}
+            </p>
           </article>
-        )}
-      </div>
-    </section>
+
+          {response.citations.length > 0 && (
+            <CitationList citations={response.citations} />
+          )}
+        </section>
+      )}
+    </div>
   );
 }

@@ -1,35 +1,51 @@
 import Link from "next/link";
+import ThemeToggle from "../theme/theme-toggle";
+
+const navigationItems = [
+  {
+    href: "/search",
+    label: "Search",
+  },
+  {
+    href: "/ask",
+    label: "Ask LawInc",
+  },
+];
 
 export default function PublicNav() {
   return (
-    <nav className="flex items-center gap-6 border-b border-slate-800 px-6 py-4">
-      <Link
-        href="/"
-        className="font-semibold text-black"
+    <header className="border-b border-border bg-background">
+      <nav
+        aria-label="Main navigation"
+        className="lawinc-container-wide flex min-h-18 items-center justify-between gap-8"
       >
-        LawInc
-      </Link>
+        <Link
+          href="/"
+          className="shrink-0 font-lawinc-serif text-2xl font-medium tracking-tight text-foreground"
+        >
+          LawInc
+        </Link>
 
-      <Link
-        href="/search"
-        className="text-sm text-black-300 hover:text-gray-400"
-      >
-        Search
-      </Link>
+        <div className="flex items-center gap-1">
+          {navigationItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-md px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+            >
+              {item.label}
+            </Link>
+          ))}
 
-      <Link
-        href="/ask"
-        className="text-sm text-black-300 hover:text-gray-400"
-      >
-        Ask
-      </Link>
-
-      <Link
-        href="/admin"
-        className="text-sm text-black-300 hover:text-gray-400"
-      >
-        Admin
-      </Link>
-    </nav>
+          <Link
+            href="/admin"
+            className="ml-2 rounded-md border border-border px-3 py-2 text-sm font-medium text-muted transition-colors hover:border-border-strong hover:bg-surface-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+          >
+            Admin
+          </Link>
+          <ThemeToggle/>
+        </div>
+      </nav>
+    </header>
   );
 }

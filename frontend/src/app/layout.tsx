@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lora } from "next/font/google";
 import "./globals.css";
 import PublicNav from "@/components/navigation/public-nav";
 
@@ -13,6 +13,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const lawincSerif = Lora({
+  variable: "--font-lawinc-serif",
+  subsets: ["latin"],
+  // display: "swap",
+})
+
 export const metadata: Metadata = {
   title: "LawInc",
   description: "Legal Information and administration platform.",
@@ -22,11 +28,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${lawincSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-screen flex-col bg-background text-foreground">
         <PublicNav/>
-        {children}</body>
+        <main className="flex-1">
+          {children}
+          </main>
+        </body>
     </html>
   );
 }

@@ -1,15 +1,568 @@
 @import "tailwindcss";
 
+/*
+ * LawInc Design System
+ *
+ * Light: Warm Ivory + Court Green
+ * Dark:  Midnight Navy + Judicial Gold
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ─────────────────────────────────────────
+    Light theme
+    ───────────────────────────────────────── */
+
+  --background: #f8f6f0;
+  --foreground: #101713;
+
+  --surface: #fffdf8;
+  --surface-muted: #f1efe8;
+  --surface-subtle: #ebe8df;
+
+  --primary: #164b35;
+  --primary-hover: #103c2a;
+  --primary-foreground: #ffffff;
+
+  --accent: #b08d57;
+  --accent-hover: #96733f;
+  --accent-foreground: #17130d;
+
+  --muted: #59635c;
+  --border: #d9ddd7;
+  --border-strong: #c2c9c1;
+
+  --success: #286b4d;
+  --warning: #a66a20;
+  --danger: #a33a32;
+
+  --focus: #164b35;
 }
+
+.dark {
+  /* ─────────────────────────────────────────
+    Dark theme
+    ───────────────────────────────────────── */
+
+  --background: #050b14;
+  --foreground: #f5f1e8;
+
+  --surface: #0d1624;
+  --surface-muted: #111d2d;
+  --surface-subtle: #172335;
+
+  --primary: #e0a62b;
+  --primary-hover: #efb83c;
+  --primary-foreground: #080b10;
+
+  --accent: #c99524;
+  --accent-hover: #e0a62b;
+  --accent-foreground: #fff8e8;
+
+  --muted: #aeb7c4;
+  --border: #263344;
+  --border-strong: #3a4a5f;
+
+  --success: #5ca77c;
+  --warning: #d39a3b;
+  --danger: #d06a61;
+
+  --focus: #e0a62b;
+}
+
+/* ─────────────────────────────────────────
+  Tailwind color tokens
+  ───────────────────────────────────────── */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-subtle: var(--surface-subtle);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --color-focus: var(--focus);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-lawinc-serif);
+
+    /* Layout */
+  --container-narrow: 45rem;
+  --container-standard: 60rem;
+  --container-wide: 80rem;
+
+  --spacing-page: 1.5rem;
+  --spacing-page-lg: 2rem;
+}
+
+/* ─────────────────────────────────────────
+   Typography
+   ───────────────────────────────────────── */
+
+.lawinc-display {
+  font-family: var(--font-lawinc-serif), serif;
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+.lawinc-heading-xl {
+  font-family: var(--font-lawinc-serif), serif;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+
+.lawinc-heading-lg {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+
+.lawinc-heading-md {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 650;
+}
+
+.lawinc-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.lawinc-body {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.lawinc-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.lawinc-label {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lawinc-metadata {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.lawinc-legal-text {
+  max-width: 65ch;
+  font-family: var(--font-lawinc-serif), serif;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--foreground);
+}
+
+.lawinc-legal-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lawinc-prose {
+  max-width: 68ch;
+}
+
+.lawinc-prose-wide {
+  max-width: 78ch;
+}
+
+/* ─────────────────────────────────────────
+  Base
+  ───────────────────────────────────────── */
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.font-lawinc-serif {
+  font-family: var(--font-lawinc-serif), serif;
+}
+
+/* ─────────────────────────────────────────
+  Layout utilities
+  ───────────────────────────────────────── */
+
+.lawinc-container {
+  width: 100%;
+  max-width: var(--container-standard);
+  margin-inline: auto;
+  padding-inline: var(--spacing-page);
+}
+
+.lawinc-container-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: var(--spacing-page);
+}
+
+.lawinc-container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+  padding-inline: var(--spacing-page);
+}
+
+@media (min-width: 768px) {
+  .lawinc-container,
+  .lawinc-container-wide,
+  .lawinc-container-narrow {
+    padding-inline: var(--spacing-page-lg);
+  }
+}
+
+.lawinc-section {
+  padding-block: 5rem;
+}
+
+.lawinc-section-lg {
+  padding-block: 7rem;
+}
+
+@media (min-width: 768px) {
+  .lawinc-section {
+    padding-block: 6rem;
+  }
+
+  .lawinc-section-lg {
+    padding-block: 9rem;
+  }
+}
+
+/* ─────────────────────────────────────────
+   Surface utilities
+   ───────────────────────────────────────── */
+
+.lawinc-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.lawinc-surface-muted {
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+}
+
+.lawinc-surface-subtle {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+}
+
+.lawinc-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.lawinc-panel-muted {
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.lawinc-panel-interactive {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.lawinc-panel-interactive:hover {
+  background: var(--surface-muted);
+  border-color: var(--border-strong);
+}
+
+.lawinc-panel-interactive:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.lawinc-elevation-sm {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.06),
+    0 1px 3px rgb(0 0 0 / 0.04);
+}
+
+.lawinc-elevation-md {
+  box-shadow:
+    0 4px 12px rgb(0 0 0 / 0.08),
+    0 2px 4px rgb(0 0 0 / 0.04);
+}
+
+.lawinc-divider {
+  border-top: 1px solid var(--border);
+}
+
+.lawinc-divider-strong {
+  border-top: 1px solid var(--border-strong);
+}
+
+.lawinc-text-muted {
+  color: var(--muted);
+}
+
+.lawinc-text-primary {
+  color: var(--primary);
+}
+
+.lawinc-text-accent {
+  color: var(--accent);
+}
+
+/* ─────────────────────────────────────────
+   Interaction primitives
+   ───────────────────────────────────────── */
+
+.lawinc-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 650;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.lawinc-button:active {
+  transform: translateY(1px);
+}
+
+.lawinc-button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.lawinc-button-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.lawinc-button-primary:hover {
+  background: var(--primary-hover);
+}
+
+.lawinc-button-secondary {
+  background: var(--surface);
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+.lawinc-button-secondary:hover {
+  background: var(--surface-muted);
+  border-color: var(--border-strong);
+}
+
+.lawinc-button-accent {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.lawinc-button-accent:hover {
+  background: var(--accent-hover);
+}
+
+.lawinc-button-ghost {
+  background: transparent;
+  color: var(--foreground);
+}
+
+.lawinc-button-ghost:hover {
+  background: var(--surface-muted);
+}
+
+/* INPUTS */
+.lawinc-input {
+  width: 100%;
+  min-height: 2.875rem;
+  padding-inline: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.lawinc-input::placeholder {
+  color: var(--muted);
+}
+
+.lawinc-input:hover {
+  border-color: var(--border-strong);
+}
+
+.lawinc-input:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 15%, transparent);
+}
+
+.lawinc-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* TEXTAREA */
+.lawinc-textarea {
+  width: 100%;
+  min-height: 8rem;
+  padding: 0.875rem;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.6;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.lawinc-textarea::placeholder {
+  color: var(--muted);
+}
+
+.lawinc-textarea:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 15%, transparent);
+}
+
+.lawinc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lawinc-field-label {
+  font-size: 0.8125rem;
+  font-weight: 650;
+  color: var(--foreground);
+}
+
+.lawinc-field-help {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.lawinc-field-error {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--danger);
+}
+
+.lawinc-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--primary) 35%,
+    transparent
+  );
+  text-underline-offset: 0.2em;
+  transition:
+    color 160ms ease,
+    text-decoration-color 160ms ease;
+}
+
+.lawinc-link:hover {
+  color: var(--primary-hover);
+  text-decoration-color: currentColor;
+}
+
+.lawinc-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.lawinc-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 1.75rem;
+  padding-inline: 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.lawinc-status-success {
+  color: var(--success);
+}
+
+.lawinc-status-warning {
+  color: var(--warning);
+}
+
+.lawinc-status-danger {
+  color: var(--danger);
+}
+
+/* ─────────────────────────────────────────
+  Selection
+  ───────────────────────────────────────── */
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -19,8 +572,8 @@
   }
 } */
 
-body {
+/* body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */

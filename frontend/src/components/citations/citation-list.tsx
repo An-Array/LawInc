@@ -10,21 +10,33 @@ export default function CitationList({
   }
 
   return (
-    <section className="mt-8">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
-        Sources
-      </h2>
+    <section className="mt-12 border-t border-border pt-8">
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+          Evidence
+        </p>
 
-      <ul className="mt-3 space-y-2">
-        {citations.map((citation) => (
+        <h2 className="mt-3 font-lawinc-serif text-2xl tracking-tight text-foreground">
+          Sources
+        </h2>
+      </div>
+
+      <ol className="mt-6 divide-y divide-border border-y border-border">
+        {citations.map((citation, index) => (
           <li
-            key={citation}
-            className="rounded-md border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-slate-300"
+            key={`${citation}-${index}`}
+            className="flex gap-5 py-5"
           >
-            {citation}
+            <span className="shrink-0 text-xs font-semibold text-accent">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <p className="text-sm leading-6 text-muted">
+              {citation}
+            </p>
           </li>
         ))}
-      </ul>
+      </ol>
     </section>
   );
 }
