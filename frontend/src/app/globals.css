@@ -7,10 +7,12 @@
  * Dark:  Midnight Navy + Judicial Gold
  */
 
-:root {
-  /* ─────────────────────────────────────────
-    Light theme
-    ───────────────────────────────────────── */
+ :root {
+   /* ─────────────────────────────────────────
+   Light theme
+   ───────────────────────────────────────── */
+
+  --hero-bg-img: url("../../public/images/hero-light-bg.png");
 
   --background: #f8f6f0;
   --foreground: #101713;
@@ -42,6 +44,8 @@
   /* ─────────────────────────────────────────
     Dark theme
     ───────────────────────────────────────── */
+
+  --hero-bg-img: url("../../public/images/hero-dark-bg.png");
 
   --background: #050b14;
   --foreground: #f5f1e8;
@@ -554,6 +558,68 @@ body {
 
 .lawinc-status-danger {
   color: var(--danger);
+}
+
+/* HERO SECTION */
+
+.hero-preview {
+  border-radius: 1rem 4rem 1rem 1rem;
+  isolation: isolate;
+}
+
+.hero-preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.16),
+      transparent 35%,
+      transparent 70%,
+      rgba(255, 255, 255, 0.04)
+    );
+  z-index: -1;
+}
+
+.dark .hero-preview::before {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06),
+      transparent 35%,
+      transparent 70%,
+      rgba(255, 255, 255, 0.02)
+    );
+}
+
+.hero-court {
+  position: absolute;
+  top: -12%;
+  right: 0;
+  bottom: 62;
+  width: 75%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-court-light {
+  display: block;
+  opacity: 1;
+}
+
+.hero-court-dark {
+  display: none;
+  opacity: 0.80;
+}
+
+.dark .hero-court-light {
+  display: none;
+}
+
+.dark .hero-court-dark {
+  display: block;
 }
 
 /* ─────────────────────────────────────────

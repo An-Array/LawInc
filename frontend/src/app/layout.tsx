@@ -28,7 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${lawincSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${lawincSerif.variable} h-full antialiased dark`}
     >
       <body className="flex min-h-screen flex-col bg-background text-foreground">
         <PublicNav/>

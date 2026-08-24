@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThemeToggle from "../theme/theme-toggle";
+import {Scale} from "lucide-react";
 
 const navigationItems = [
   {
@@ -23,7 +24,10 @@ export default function PublicNav() {
           href="/"
           className="shrink-0 font-lawinc-serif text-2xl font-medium tracking-tight text-foreground"
         >
-          LawInc
+          <div className="flex items-center gap-2">
+          <Scale className="text-primary h-8 w-8"/>
+          <span>LawInc</span>
+          </div>
         </Link>
 
         <div className="flex items-center gap-1">
